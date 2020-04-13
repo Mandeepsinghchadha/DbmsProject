@@ -158,7 +158,7 @@
         android:layout_width="89dp"
         android:layout_height="56dp"
         android:layout_marginStart="96dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="128dp"
         android:text="Update"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_price" />
@@ -186,6 +186,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bv_update" />
+
+    <TextView
+        android:id="@+id/tv_hotel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:text="Hotel : "
+        app:layout_constraintStart_toStartOf="@+id/tv_agency"
+        app:layout_constraintTop_toBottomOf="@+id/tv_agency" />
+
+    <Spinner
+        android:id="@+id/sp_hotel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_hotel"
+        app:layout_constraintStart_toEndOf="@+id/tv_hotel"
+        app:layout_constraintTop_toTopOf="@+id/tv_hotel" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

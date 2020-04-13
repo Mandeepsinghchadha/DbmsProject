@@ -6,9 +6,9 @@ public class Booking implements Serializable {
 
     private String BookingID,ClientName,PackageType,City,vehicleID;
     private String VehicleName,VehicleType,DateOfBooking,FromDate;
-    private String Days,Nights,Price, agencyName, agencyID, cityID, clientID, packageID;
+    private String Days,Nights,Price, agencyName, agencyID, cityID, clientID, packageID,hotel,hotelID;
 
-    public Booking(String bookingID, String clientName, String packageType, String city, String vehicleName, String vehicleType, String dateOfBooking, String fromDate, String days, String nights, String price, String agencyName, String vehicleID, String agencyID, String cityID, String packageID, String clientID) {
+    public Booking(String bookingID, String clientName, String packageType, String city, String vehicleName, String vehicleType, String dateOfBooking, String fromDate, String days, String nights, String price, String agencyName, String vehicleID, String agencyID, String cityID, String packageID, String clientID, String hotel, String hotelID) {
         BookingID = bookingID;
         ClientName = clientName;
         PackageType = packageType;
@@ -26,6 +26,8 @@ public class Booking implements Serializable {
         this.cityID = cityID;
         this.packageID = packageID;
         this.clientID = clientID;
+        this.hotel = hotel;
+        this.hotelID = hotelID;
     }
 
     public String getBookingID() {
@@ -162,5 +164,21 @@ public class Booking implements Serializable {
 
     public void setPackageID(String packageID) {
         this.packageID = packageID;
+    }
+
+    public String getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(String hotel) {
+        this.hotel = hotel;
+    }
+
+    public String getHotelID() {
+        return hotelID;
+    }
+
+    public void setHotelID(String hotelID) {
+        this.hotelID = hotelID;
     }
 }

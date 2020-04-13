@@ -31,22 +31,22 @@ public class EditBookingActivity extends AppCompatActivity {
     public static final String TAG = "EditBookingActivity";
 
     private TextView tv_client, tv_duration, tv_agency, tv_bookingID;
-    private Spinner sp_city, sp_packageType, sp_vehicle;
+    private Spinner sp_city, sp_packageType, sp_vehicle, sp_hotel;
     private EditText et_from, et_price;
     private Button bv_update,bv_cancel, bv_cancelBooking;
 
-    private ArrayList<String> city_options,package_options, vehicle_options;
-    private ArrayAdapter<String> cityAdapter, packageAdapter, vehicleAdapter;
+    private ArrayList<String> city_options,package_options, vehicle_options, hotel_options;
+    private ArrayAdapter<String> cityAdapter, packageAdapter, vehicleAdapter, hotel_adapter;
 
     private SQLiteDatabase mDb;
     private DatabaseHelper mDbHelper;
 
     private Booking booking;
 
-    private int cityPosition, packagePosition, vehiclePosition;
+    private int cityPosition, packagePosition, vehiclePosition, hotelPosition;
     private float changedPrice;
 
-    HashMap<String,String> cityMap,vehicleMap, packageMap;
+    HashMap<String,String> cityMap,vehicleMap, packageMap, hotelMap;
 
     public String changedCity, changedPackageType, changedVehicle;
 
@@ -62,6 +62,7 @@ public class EditBookingActivity extends AppCompatActivity {
         sp_city = findViewById(R.id.sp_city);
         sp_packageType = findViewById(R.id.sp_packageType);
         sp_vehicle = findViewById(R.id.sp_vehicle);
+        sp_hotel = findViewById(R.id.sp_hotel);
         et_from = findViewById(R.id.et_from);
         et_price = findViewById(R.id.et_price);
         bv_update = findViewById(R.id.bv_update);
@@ -82,18 +83,6 @@ public class EditBookingActivity extends AppCompatActivity {
 
         populateOptions();
 
-        packageAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, package_options);
-        vehicleAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, vehicle_options);
-
-        packageAdapter.setNotifyOnChange(true);
-        vehicleAdapter.setNotifyOnChange(true);
-
-        sp_packageType.setAdapter(packageAdapter);
-        sp_packageType.setSelection(packagePosition);
-
-        sp_vehicle.setAdapter(vehicleAdapter);
-        sp_vehicle.setSelection(vehiclePosition);
-
         bv_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +93,7 @@ public class EditBookingActivity extends AppCompatActivity {
                 String changedPackageID = packageMap.get(sp_packageType.getSelectedItem().toString());
                 String changedVehicleID = vehicleMap.get(sp_vehicle.getSelectedItem().toString());
                 String changedCityID = cityMap.get(sp_city.getSelectedItem().toString());
+                String changedHotelID = hotelMap.get(sp_hotel.getSelectedItem().toString());
 
                 Log.d(TAG, "onClick: " + changedCityID + changedPackageID + changedVehicleID);
 
@@ -113,6 +103,7 @@ public class EditBookingActivity extends AppCompatActivity {
                 contentValues.put("PackageID",changedPackageID);
                 contentValues.put("VehicleID",changedVehicleID);
                 contentValues.put("CityID",changedCityID);
+                contentValues.put("HotelID",changedCityID);
                 contentValues.put("PackageType",sp_packageType.getSelectedItem().toString().split(",")[0].split(":")[1]);
 
                 mDb.update("booking",contentValues,"bookingID = ?",new String[]{booking.getBookingID()});
@@ -128,6 +119,7 @@ public class EditBookingActivity extends AppCompatActivity {
                 booking.setPackageID(changedPackageID);
                 booking.setVehicleID(changedVehicleID);
                 booking.setCityID(changedCityID);
+                booking.setHotelID(changedHotelID);
 
 
                 Intent intent = new Intent();
@@ -165,11 +157,35 @@ public class EditBookingActivity extends AppCompatActivity {
         getCityOptions(mDb,booking.getCity());
         getPackageOptions(mDb,booking.getCity());
         getVehicleOptions(mDb,booking.getCity());
+        getHotelOptions(mDb,booking.getCity());
 
         populateCitySpinner();
         populatePackageSpinner();
         populateVehicleSpinner();
+        populateHotelSpinner();
 
+    }
+
+    private void getHotelOptions(SQLiteDatabase mDb, String cityName) {
+        String sql = "Select hotelID, HotelName, availableRooms, h.rating From HotelInformation h, TouristCity c " +
+                "Where c.cityID = h.cityID and c.cityName = '" + cityName + "';" ;
+        Cursor cur = mDb.rawQuery(sql,null);
+
+        int position = 0;
+        hotel_options = new ArrayList<>();
+        hotelMap = new HashMap<>();
+        while(cur!=null && cur.moveToNext()){
+
+            hotel_options.add("Name:" + cur.getString(1) + ",Rating:" + cur.getString(3) + ",Rooms:" + cur.getString(2));
+            hotelMap.put("Name:" + cur.getString(1) + ",Rating:" + cur.getString(3) + ",Rooms:" + cur.getString(2),cur.getString(0));
+            if(cur.getString(0).equalsIgnoreCase(booking.getHotelID()))
+                hotelPosition = position;
+            position ++;
+        }
+
+        sp_hotel.setSelection(hotelPosition);
+
+        cur.close();
     }
 
     private void getVehicleOptions(SQLiteDatabase mDb, String cityName) {
@@ -221,6 +237,8 @@ public class EditBookingActivity extends AppCompatActivity {
         sp_packageType.setSelection(packagePosition);
 
         cur.close();
+
+
 
     }
 
@@ -322,6 +340,30 @@ public class EditBookingActivity extends AppCompatActivity {
         sp_vehicle.setAdapter(vehicleAdapter);
 
         sp_vehicle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+    }
+
+    private void populateHotelSpinner() {
+
+        Log.d(TAG, "populateHotelSpinner: " + hotel_options.size());
+
+        hotel_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, hotel_options);
+        hotel_adapter.setNotifyOnChange(true);
+
+        sp_hotel.setAdapter(hotel_adapter);
+
+        sp_hotel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 

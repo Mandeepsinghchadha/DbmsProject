@@ -102,6 +102,7 @@ public class ManagerHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             booking_holder.tv_booking.setText("BookingID : " + booking.getBookingID().toString());
             booking_holder.tv_vehicle.setText("Vehicle : " + booking.getVehicleName().toString() + " (" + booking.getVehicleType() + ")(Id : " + booking.getVehicleID() + ")");
             booking_holder.tv_agency.setText("Agency : " + booking.getAgencyName().toString() +"(Id : " + booking.getAgencyID() + ")");
+            booking_holder.tv_hotel.setText("Hotel : " + booking.getHotel().toString() +"(Id : " + booking.getHotelID() + ")");
 
         }
         else if(VIEW_MODE == VIEW_MODE_AGENCY){
@@ -188,7 +189,7 @@ public class ManagerHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public class BookingsViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tv_name,tv_city,tv_package,tv_from,tv_price, tv_booking, tv_vehicle, tv_agency;
+        TextView tv_name,tv_city,tv_package,tv_from,tv_price, tv_booking, tv_vehicle, tv_agency, tv_hotel;
 
         public BookingsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -200,6 +201,7 @@ public class ManagerHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             tv_booking = itemView.findViewById(R.id.tv_booking);
             tv_vehicle = itemView.findViewById(R.id.tv_vehicle);
             tv_agency = itemView.findViewById(R.id.tv_agency);
+            tv_hotel = itemView.findViewById(R.id.tv_hotel);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

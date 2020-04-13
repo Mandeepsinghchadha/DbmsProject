@@ -195,7 +195,7 @@ public class HomeFragment extends Fragment {
 
                 if(VIEW_MODE == VIEW_MODE_BOOKING){
 
-                    filter_options = new String[]{"BookingID","ClientID","PackageID","cityID","VehicleID","agencyID","ClientName","PackageType","CityName","VehicleName","VehicleType","DateOfBooking","FromDate","Days","Nights","Price", "agencyName"};
+                    filter_options = new String[]{"BookingID","ClientID","PackageID","cityID","VehicleID","agencyID","ClientName","PackageType","CityName","VehicleName","VehicleType","DateOfBooking","FromDate","Days","Nights","Price", "agencyName","hotelID","HotelName"};
                     builder.setTitle("Filter Bookings");
                 }
                 else if(VIEW_MODE == VIEW_MODE_AGENCY){
@@ -353,7 +353,9 @@ public class HomeFragment extends Fragment {
                     cur.getString(13),
                     cur.getString(14),
                     cur.getString(15),
-                    cur.getString(16));
+                    cur.getString(16),
+                    cur.getString(17),
+                    cur.getString(18));
             bookings.add(booking);
 
         }
@@ -463,9 +465,9 @@ public class HomeFragment extends Fragment {
 
     private String generateSqlBookings(ArrayList<Filter> booking_filters) {
 
-        StringBuilder sql = new StringBuilder("SELECT bookingID, clientName, b.packageType, cityName, vehicleName, vehicleType, dateOfBooking, fromDate, days, nights, b.price, agencyName,b.vehicleID,p.agencyID, b.packageID, b.clientID,b.cityID " +
-                "FROM booking b,client c,TouristCity t,Vehicle v,Package p,agencies a " +
-                "WHERE b.clientID = c.clientID and b.packageID = p.packageID and b.cityID = t.cityID and b.vehicleID = v.vehicleID and p.agencyID = a.agencyID ");
+        StringBuilder sql = new StringBuilder("SELECT bookingID, clientName, b.packageType, cityName, vehicleName, vehicleType, dateOfBooking, fromDate, days, nights, b.price, agencyName,b.vehicleID,p.agencyID, b.packageID, b.clientID,b.cityID,h.hotelName,b.hotelID " +
+                "FROM booking b,client c,TouristCity t,Vehicle v,Package p,agencies a, hotelInformation h " +
+                "WHERE b.clientID = c.clientID and b.packageID = p.packageID and b.cityID = t.cityID and b.vehicleID = v.vehicleID and p.agencyID = a.agencyID and b.hotelID = h.hotelID");
         
         for(int i=0;i<booking_filters.size();i++){
             
@@ -545,6 +547,14 @@ public class HomeFragment extends Fragment {
             }
             else if(booking_filters.get(i).getType().equalsIgnoreCase("AgencyID")){
                 sql.append("p.agencyID = " + booking_filters.get(i).getFilter() + " ");
+
+            }
+            else if(booking_filters.get(i).getType().equalsIgnoreCase("HotelID")){
+                sql.append("b.hotelID = " + booking_filters.get(i).getFilter() + " ");
+
+            }
+            else if(booking_filters.get(i).getType().equalsIgnoreCase("HotelName")){
+                sql.append("h.hotelName = " + booking_filters.get(i).getFilter() + " ");
 
             }
 
@@ -1106,9 +1116,9 @@ public class HomeFragment extends Fragment {
 
     private ArrayList<Booking> getBookings() {
 
-        String sql = "SELECT bookingID, clientName, b.packageType, cityName, vehicleName, vehicleType, dateOfBooking, fromDate, days, nights, packagePrice, agencyName, b.vehicleID,p.agencyID, b.packageID, b.clientID,b.cityID " +
-                "FROM booking b,client c,TouristCity t,Vehicle v,Package p,agencies a " +
-                "WHERE b.clientID = c.clientID and b.packageID = p.packageID and b.cityID = t.cityID and b.vehicleID = v.vehicleID and p.agencyID = a.agencyID;";
+        String sql = "SELECT bookingID, clientName, b.packageType, cityName, vehicleName, vehicleType, dateOfBooking, fromDate, days, nights, packagePrice, agencyName, b.vehicleID,p.agencyID, b.packageID, b.clientID,b.cityID, h.hotelName, b.hotelID " +
+                "FROM booking b,client c,TouristCity t,Vehicle v,Package p,agencies a, hotelInformation h " +
+                "WHERE b.clientID = c.clientID and b.packageID = p.packageID and b.cityID = t.cityID and b.vehicleID = v.vehicleID and p.agencyID = a.agencyID and b.hotelID = h.hotelID;";
         Cursor cur = mDb.rawQuery(sql, null);
 
         ArrayList<Booking> bookings = new ArrayList<>();
@@ -1130,7 +1140,9 @@ public class HomeFragment extends Fragment {
                     cur.getString(13),
                     cur.getString(14),
                     cur.getString(15),
-                    cur.getString(16));
+                    cur.getString(16),
+                    cur.getString(17),
+                    cur.getString(18));
             bookings.add(booking);
 
         }

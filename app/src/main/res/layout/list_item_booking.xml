@@ -22,10 +22,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="4dp"
             android:text="Client : "
             app:layout_constraintStart_toEndOf="@+id/iv_photo"
-            app:layout_constraintTop_toTopOf="@+id/iv_photo" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_booking" />
 
         <TextView
             android:id="@+id/tv_city"
@@ -62,6 +62,7 @@
             android:layout_marginEnd="64dp"
             android:text="From : "
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_hotel"
             app:layout_constraintTop_toTopOf="@+id/tv_name" />
 
         <TextView
@@ -86,12 +87,9 @@
             android:id="@+id/tv_booking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="2dp"
             android:text="Booking ID : "
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_name"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -102,6 +100,15 @@
             android:text="Vehicle : "
             app:layout_constraintStart_toStartOf="@+id/tv_package"
             app:layout_constraintTop_toBottomOf="@+id/tv_package" />
+
+        <TextView
+            android:id="@+id/tv_hotel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="62dp"
+            android:text="Hotel : "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_booking" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
