@@ -7,14 +7,14 @@
     tools:context=".Activities.EditBookingActivity">
 
     <TextView
-        android:id="@+id/tv_addBooking"
+        android:id="@+id/tv_bookingId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="179dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="179dp"
-        android:text="Booking ID : "
-        android:textSize="15sp"
+        android:text="Create Booking"
+        android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,6 +30,15 @@
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/sp_clientName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_client_name"
+        app:layout_constraintStart_toEndOf="@+id/tv_client_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_client_name" />
 
     <TextView
         android:id="@+id/tv_city"
@@ -130,16 +139,46 @@
         app:layout_constraintTop_toTopOf="@+id/tv_vehicle" />
 
     <EditText
-        android:id="@+id/et_from"
-        android:layout_width="wrap_content"
+        android:id="@+id/et_from_day"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="number"
+        android:gravity="center_horizontal"
         android:textSize="15sp"
+        android:hint="Day"
         app:layout_constraintBottom_toBottomOf="@+id/tv_from"
         app:layout_constraintStart_toEndOf="@+id/tv_from"
         app:layout_constraintTop_toTopOf="@+id/tv_from" />
+
+    <EditText
+        android:id="@+id/et_from_month"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:inputType="number"
+        android:gravity="center_horizontal"
+        android:textSize="15sp"
+        android:hint="Month"
+        app:layout_constraintBottom_toBottomOf="@+id/et_from_day"
+        app:layout_constraintStart_toEndOf="@+id/et_from_day"
+        app:layout_constraintTop_toTopOf="@+id/et_from_day" />
+
+    <EditText
+        android:id="@+id/et_from_year"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:inputType="number"
+        android:gravity="center_horizontal"
+        android:textSize="15sp"
+        android:hint="Year"
+        app:layout_constraintBottom_toBottomOf="@+id/et_from_month"
+        app:layout_constraintStart_toEndOf="@+id/et_from_month"
+        app:layout_constraintTop_toTopOf="@+id/et_from_month" />
 
     <EditText
         android:id="@+id/et_price"
@@ -147,45 +186,33 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="date"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_price"
         app:layout_constraintStart_toEndOf="@+id/tv_price"
         app:layout_constraintTop_toTopOf="@+id/tv_price" />
 
     <Button
-        android:id="@+id/bv_update"
-        android:layout_width="89dp"
-        android:layout_height="56dp"
+        android:id="@+id/bv_addBooking"
+        android:layout_width="108dp"
+        android:layout_height="61dp"
         android:layout_marginStart="96dp"
         android:layout_marginTop="128dp"
-        android:text="Update"
+        android:text="Add Booking"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_price" />
 
     <Button
         android:id="@+id/bv_cancel"
-        android:layout_width="103dp"
-        android:layout_height="53dp"
+        android:layout_width="108dp"
+        android:layout_height="61dp"
         android:layout_marginStart="44dp"
         android:layout_marginEnd="96dp"
-        android:text="Cancel Updates"
+        android:text="Cancel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.021"
-        app:layout_constraintStart_toEndOf="@+id/bv_update"
-        app:layout_constraintTop_toTopOf="@+id/bv_update" />
-
-    <Button
-        android:id="@+id/bv_cancelBooking"
-        android:layout_width="103dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="164dp"
-        android:layout_marginTop="29dp"
-        android:layout_marginEnd="164dp"
-        android:text="Cancel Booking"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bv_update" />
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toEndOf="@+id/bv_addBooking"
+        app:layout_constraintTop_toTopOf="@+id/bv_addBooking" />
 
     <TextView
         android:id="@+id/tv_hotel"

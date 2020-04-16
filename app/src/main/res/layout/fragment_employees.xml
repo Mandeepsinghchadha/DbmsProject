@@ -27,14 +27,6 @@
             android:paddingBottom="8dp"
             android:textSize="18dp" />
 
-        <ImageButton
-            android:id="@+id/ib_search_employees"
-            android:layout_width="0dp"
-            android:layout_weight="1.5"
-            android:layout_height="25dp"
-            android:layout_gravity="center_vertical"
-            android:background="@android:color/white"
-            android:src="@drawable/search"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

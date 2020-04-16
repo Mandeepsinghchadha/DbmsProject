@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,7 +19,6 @@ import android.widget.TextView;
 import com.teamcool.touristum.DatabaseHelper;
 import com.teamcool.touristum.R;
 import com.teamcool.touristum.data.model.Booking;
-import com.teamcool.touristum.data.model.Hotel;
 import com.teamcool.touristum.ui.home.HomeFragment;
 
 import java.util.ArrayList;
@@ -46,7 +44,7 @@ public class EditBookingActivity extends AppCompatActivity {
     private int cityPosition, packagePosition, vehiclePosition, hotelPosition;
     private float changedPrice;
 
-    HashMap<String,String> cityMap,vehicleMap, packageMap, hotelMap;
+    private HashMap<String,String> cityMap,vehicleMap, packageMap, hotelMap, agencyMap;
 
     public String changedCity, changedPackageType, changedVehicle;
 
@@ -58,7 +56,7 @@ public class EditBookingActivity extends AppCompatActivity {
         tv_client = findViewById(R.id.tv_client_name);
         tv_duration = findViewById(R.id.tv_duration);
         tv_agency = findViewById(R.id.tv_agency);
-        tv_bookingID = findViewById(R.id.tv_bookingId);
+        tv_bookingID = findViewById(R.id.tv_addBooking);
         sp_city = findViewById(R.id.sp_city);
         sp_packageType = findViewById(R.id.sp_packageType);
         sp_vehicle = findViewById(R.id.sp_vehicle);
@@ -103,7 +101,7 @@ public class EditBookingActivity extends AppCompatActivity {
                 contentValues.put("PackageID",changedPackageID);
                 contentValues.put("VehicleID",changedVehicleID);
                 contentValues.put("CityID",changedCityID);
-                contentValues.put("HotelID",changedCityID);
+                contentValues.put("HotelID",changedHotelID);
                 contentValues.put("PackageType",sp_packageType.getSelectedItem().toString().split(",")[0].split(":")[1]);
 
                 mDb.update("booking",contentValues,"bookingID = ?",new String[]{booking.getBookingID()});
@@ -215,17 +213,19 @@ public class EditBookingActivity extends AppCompatActivity {
 
     private void getPackageOptions(SQLiteDatabase mDb, String cityName) {
 
-        String sql = "Select packageID, packageType, days, nights, packagePrice From Package p, TouristCity c " +
-                "Where p.cityID = c.cityID and c.cityName = '" + cityName + "';" ;
+        String sql = "Select packageID, packageType, days, nights, packagePrice,agencyName From Package p, TouristCity c, agencies a " +
+                "Where p.cityID = c.cityID and p.agencyID = a.agencyID and c.cityName = '" + cityName + "';" ;
         Cursor cur = mDb.rawQuery(sql,null);
 
         int position = 0;
         package_options = new ArrayList<>();
         packageMap = new HashMap<>();
+        agencyMap = new HashMap<>();
         while(cur!=null && cur.moveToNext()){
 
             package_options.add("Type:" + cur.getString(1) + ",Days/Nights:" + cur.getString(2) + "/" + cur.getString(3) + ",Price:" + cur.getString(4));
             packageMap.put("Type:" + cur.getString(1) + ",Days/Nights:" + cur.getString(2) + "/" + cur.getString(3) + ",Price:" + cur.getString(4),cur.getString(0));
+            agencyMap.put("Type:" + cur.getString(1) + ",Days/Nights:" + cur.getString(2) + "/" + cur.getString(3) + ",Price:" + cur.getString(4),cur.getString(5));
             if(cur.getString(1).equalsIgnoreCase(booking.getPackageType())
                     && cur.getString(2).equalsIgnoreCase(booking.getDays())
                     && cur.getString(3).equalsIgnoreCase(booking.getNights())
@@ -317,8 +317,11 @@ public class EditBookingActivity extends AppCompatActivity {
                 String nights = package_options.get(position).split(",")[1].split(":")[1].split("/")[1];
                 String price = package_options.get(position).split(",")[2].split(":")[1];
 
+                String agency = agencyMap.get(package_options.get(position));
+
                 tv_duration.setText("Duration : " + days + " Days/ " + nights + "Nights");
                 et_price.setText(price);
+                tv_agency.setText("Agency : " + agency);
 
             }
 

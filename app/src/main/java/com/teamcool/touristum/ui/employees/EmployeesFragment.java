@@ -1,6 +1,8 @@
 package com.teamcool.touristum.ui.employees;
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -26,7 +28,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.teamcool.touristum.Activities.EditBookingActivity;
 import com.teamcool.touristum.Activities.EmployeeManagerActivity;
+import com.teamcool.touristum.Activities.LoginActivity;
 import com.teamcool.touristum.Adapters.ManagerEmployeeAdapter;
 import com.teamcool.touristum.DatabaseHelper;
 import com.teamcool.touristum.R;
@@ -41,7 +45,6 @@ public class EmployeesFragment extends Fragment {
 
     private RecyclerView rv_data;
     private EditText et_search, et_filter;
-    private ImageButton ib_seeach;
 
     private Employee currEmployee;
     private ArrayList<Employee> employees;
@@ -60,13 +63,6 @@ public class EmployeesFragment extends Fragment {
 
     private ArrayList<Filter> employee_filters;
 
-    public static final int VIEW_MODE_BOOKING = 1;
-    public static final int VIEW_MODE_AGENCY = 2;
-    public static final int VIEW_MODE_PACKAGE = 3;
-    public static final int VIEW_MODE_HOTEL = 4;
-    public static final int VIEW_MODE_CLIENT = 5;
-    private int VIEW_MODE;
-
     public static final String TAG = "EmployeesFragnent";
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -76,9 +72,9 @@ public class EmployeesFragment extends Fragment {
 
         rv_data = root.findViewById(R.id.rv_employee_data);
         et_search = root.findViewById(R.id.et_search_employees);
-        ib_seeach = root.findViewById(R.id.ib_search_employees);
+        et_search.setFocusable(false);
 
-        currEmployee = EmployeeManagerActivity.getLoggedInEmployee();
+        currEmployee = LoginActivity.getLoggedInEmployee();
 
         mDbHelper = new DatabaseHelper(getContext());
         mDb = mDbHelper.getReadableDatabase();
@@ -89,7 +85,44 @@ public class EmployeesFragment extends Fragment {
         builder = new AlertDialog.Builder(getContext());
 
         rv_data.setLayoutManager(new LinearLayoutManager(getContext()));
-        managerEmployeeAdapter = new ManagerEmployeeAdapter(employees,getContext());
+        managerEmployeeAdapter = new ManagerEmployeeAdapter(employees, getContext(), new ManagerEmployeeAdapter.onEmployeeClickListener() {
+            @Override
+            public void selectedEmployee(final Employee employee) {
+                final View view = getLayoutInflater().inflate(R.layout.update_fire_employee, null);
+                builder.setView(view);
+
+                final AlertDialog dialog;
+
+                builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        if(which == DialogInterface.BUTTON_POSITIVE){
+                            String newSalary = ((EditText)view.findViewById(R.id.et_newSalary)).getText().toString();
+                            updateSalary(newSalary,employee.getEmp_id());
+                        }
+
+                    }
+                });
+                builder.setNegativeButton("Terminate", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mDb.delete("employee","employeeID = ?",new String[]{employee.getEmp_id()});
+                        updateData();
+                    }
+                });
+
+                dialog = builder.create();
+                view.findViewById(R.id.ib_close).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+
+                    }
+                });
+                dialog.show();
+            }
+        });
         rv_data.setAdapter(managerEmployeeAdapter);
 
         et_search.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +148,14 @@ public class EmployeesFragment extends Fragment {
 
 
         return root;
+    }
+
+    private void updateSalary(String newSalary, String emp_id) {
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("EmployeeSalary",newSalary);
+        mDb.update("Employee",contentValues,"employeeID = ?",new String[]{emp_id});
+        updateData();
     }
 
     private ArrayList<Employee> getEmployees(){

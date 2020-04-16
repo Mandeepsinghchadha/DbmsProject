@@ -2,6 +2,7 @@ package com.teamcool.touristum.ui.profile;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.teamcool.touristum.Activities.LoginActivity;
 import com.teamcool.touristum.DatabaseHelper;
 import com.teamcool.touristum.Activities.EmployeeManagerActivity;
 import com.teamcool.touristum.R;
@@ -36,6 +39,7 @@ public class ProfileFragment extends Fragment {
     private Employee employee;
 
     private TextView tv_id;
+    private Button bv_logout;
     private EditText et_name, et_address, et_contact, et_email,et_salary,et_branch,et_type_;
     private ImageView iv_edit_name, iv_edit_address, iv_edit_contact, iv_edit_email, iv_profile;
 
@@ -52,6 +56,7 @@ public class ProfileFragment extends Fragment {
         et_salary = root.findViewById(R.id.et_salary);
         et_branch = root.findViewById(R.id.et_branch);
         et_type_ = root.findViewById(R.id.et_type);
+        bv_logout = root.findViewById(R.id.bv_logout);
 
         tv_id = root.findViewById(R.id.tv_id);
 
@@ -61,6 +66,15 @@ public class ProfileFragment extends Fragment {
         iv_profile = root.findViewById(R.id.iv_profile);
 
         mDbHelper = new DatabaseHelper(getContext());
+
+        bv_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
 
         iv_edit_address.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,7 +165,7 @@ public class ProfileFragment extends Fragment {
             e.printStackTrace();
         }
 
-        employee = EmployeeManagerActivity.getLoggedInEmployee();
+        employee = LoginActivity.getLoggedInEmployee();
 
         if(employee != null){
             et_name.setText(employee.getEmp_name());
@@ -184,13 +198,6 @@ public class ProfileFragment extends Fragment {
         contentValues.put("EmployeeContact",et_contact.getText().toString());
 
         mDb.update("Employee",contentValues,"employeeID = ?",new String[]{employee.getEmp_id()});
-
-        String sql = "select employeeID, employeeEmail from employee where employeeID = 702";
-        Cursor cur = mDb.rawQuery(sql,null);
-        while (cur != null && cur.moveToNext()) {
-            Log.d(TAG, "onPause: " + cur.getString(0) + " " + cur.getString(1));
-        }
-
 
 
     }
