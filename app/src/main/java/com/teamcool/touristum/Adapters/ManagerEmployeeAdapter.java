@@ -18,10 +18,16 @@ public class ManagerEmployeeAdapter extends RecyclerView.Adapter<ManagerEmployee
 
     private ArrayList<Employee> employees;
     private Context context;
+    private onEmployeeClickListener employeeClickListener;
 
-    public ManagerEmployeeAdapter(ArrayList<Employee> employees, Context context) {
+    public interface onEmployeeClickListener{
+        void selectedEmployee(Employee employee);
+    }
+
+    public ManagerEmployeeAdapter(ArrayList<Employee> employees, Context context, onEmployeeClickListener employeeClickListener) {
         this.employees = employees;
         this.context = context;
+        this.employeeClickListener = employeeClickListener;
     }
 
     @NonNull
@@ -69,6 +75,13 @@ public class ManagerEmployeeAdapter extends RecyclerView.Adapter<ManagerEmployee
             tv_salary = itemView.findViewById(R.id.tv_salary);
             tv_type = itemView.findViewById(R.id.tv_type);
             tv_branch = itemView.findViewById(R.id.tv_branch);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    employeeClickListener.selectedEmployee(employees.get(getAdapterPosition()));
+                }
+            });
         }
     }
 }

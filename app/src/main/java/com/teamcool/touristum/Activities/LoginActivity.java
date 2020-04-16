@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity  {
     private DatabaseHelper mDbHelper;
     private EditText et_username,et_password;
     private Button login,register;
+    private static Employee emp;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,12 +74,18 @@ public class LoginActivity extends AppCompatActivity  {
                     Log.d(TAG, "onClick: " + obj.getPassword());
 
                     if(obj.getPassword().equals(password)){
+                        emp = getEmployee(mDb,username);
                         if(obj.getType().equals("manager")){
 
-                            Employee emp = getEmployee(mDb,username);
                             Intent intent = new Intent(LoginActivity.this, EmployeeManagerActivity.class);
-                            intent.putExtra("Employee",emp);
                             startActivity(intent);
+                            finish();
+                        }
+                        else if(obj.getType().equals("customer_executive")){
+
+                            Intent intent = new Intent(LoginActivity.this, EmployeeCustomerExecutiveActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
                     }
                 }
@@ -90,6 +97,12 @@ public class LoginActivity extends AppCompatActivity  {
 
 
 
+
+    }
+
+    public static Employee getLoggedInEmployee(){
+
+        return emp;
 
     }
 

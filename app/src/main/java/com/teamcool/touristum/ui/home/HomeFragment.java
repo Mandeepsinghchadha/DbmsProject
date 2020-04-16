@@ -18,7 +18,9 @@ import android.widget.Spinner;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.teamcool.touristum.Activities.EditBookingActivity;
+import com.teamcool.touristum.Activities.LoginActivity;
 import com.teamcool.touristum.Adapters.ManagerHomeAdapter;
 import com.teamcool.touristum.DatabaseHelper;
 import com.teamcool.touristum.R;
@@ -28,6 +30,7 @@ import com.teamcool.touristum.data.model.Client;
 import com.teamcool.touristum.data.model.Filter;
 import com.teamcool.touristum.data.model.Hotel;
 import com.teamcool.touristum.data.model.Package;
+import com.teamcool.touristum.ui.AddBooking.AddBookingFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,6 +39,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,9 +51,12 @@ public class HomeFragment extends Fragment {
     private ImageButton bv_filter;
     private RecyclerView rv_data;
     private EditText et_search, et_filter;
+    private FloatingActionButton fab_addBooking;
+
     private ManagerHomeAdapter managerHomeAdapter;
     private SQLiteDatabase mDb;
     private DatabaseHelper mDbHelper;
+
     private ArrayList<Booking> bookings;
     private ArrayList<Agency> agencies;
     private ArrayList<Client> clients;
@@ -88,6 +96,7 @@ public class HomeFragment extends Fragment {
         sp_manager_options = root.findViewById(R.id.sp_manager_options);
         rv_data = root.findViewById(R.id.rv_data);
         et_search = root.findViewById(R.id.et_search);
+        fab_addBooking = root.findViewById(R.id.fab_addBooking);
 
         builder = new AlertDialog.Builder(getContext());
 
@@ -173,6 +182,18 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        fab_addBooking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getFragmentManager();
+                Fragment fragment = new AddBookingFragment();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.replace(R.id.nav_host_fragment,fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
 
         rv_data.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -232,8 +253,11 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 et_search.setHint("Filter " + manager_options[position]);
+                fab_addBooking.setVisibility(View.GONE);
                 if(manager_options[position].equals("Bookings")){
 
+                    if(LoginActivity.getLoggedInEmployee().getEmp_type().equalsIgnoreCase("manager"))
+                        fab_addBooking.setVisibility(View.VISIBLE);
 
                     managerHomeAdapter.setBookings(bookings);
                     managerHomeAdapter.setViewMode(ManagerHomeAdapter.VIEW_MODE_BOOKING);
@@ -467,7 +491,7 @@ public class HomeFragment extends Fragment {
 
         StringBuilder sql = new StringBuilder("SELECT bookingID, clientName, b.packageType, cityName, vehicleName, vehicleType, dateOfBooking, fromDate, days, nights, b.price, agencyName,b.vehicleID,p.agencyID, b.packageID, b.clientID,b.cityID,h.hotelName,b.hotelID " +
                 "FROM booking b,client c,TouristCity t,Vehicle v,Package p,agencies a, hotelInformation h " +
-                "WHERE b.clientID = c.clientID and b.packageID = p.packageID and b.cityID = t.cityID and b.vehicleID = v.vehicleID and p.agencyID = a.agencyID and b.hotelID = h.hotelID");
+                "WHERE b.clientID = c.clientID and b.packageID = p.packageID and b.cityID = t.cityID and b.vehicleID = v.vehicleID and p.agencyID = a.agencyID and b.hotelID = h.hotelID ");
         
         for(int i=0;i<booking_filters.size();i++){
             
