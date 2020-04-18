@@ -91,6 +91,7 @@ public class LoginActivity extends AppCompatActivity  {
                             finish();
                         }
                         else if(obj.getType().equals("agency")){
+                            agency=getAgency(mDb,username);
                             Intent intent=new Intent(LoginActivity.this,AgencyActivity.class);
                             startActivity(intent);
                             finish();
@@ -114,7 +115,22 @@ public class LoginActivity extends AppCompatActivity  {
 
     }
     public static Agency getLoggedInAgency(){ return agency;}
-
+    private Agency getAgency(SQLiteDatabase mDb,String username){
+        String agencyID = username.substring(6,username.length());
+        String sql ="SELECT AgencyID, AgencyName, AgencyAddress, AgencyContact,NumberOfPackages \n" +
+                " FROM agencies  " +
+                "where AgencyID = '" +agencyID + "' ;";
+        Cursor cur = mDb.rawQuery(sql, null);
+        Agency ag=null;
+        while(cur != null && cur.moveToNext()) {
+            ag=new Agency(cur.getString(0),
+                    cur.getString(1),
+                    cur.getString(2),
+                    cur.getString(3),
+                    cur.getString(4));
+        }
+        return ag;
+    }
     private Employee getEmployee(SQLiteDatabase mDb, String username) {
 
         String empId = username.substring(8,username.length());
