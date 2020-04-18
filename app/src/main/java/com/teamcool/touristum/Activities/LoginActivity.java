@@ -15,8 +15,10 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.teamcool.touristum.DatabaseHelper;
 import com.teamcool.touristum.R;
+import com.teamcool.touristum.data.model.Agency;
 import com.teamcool.touristum.data.model.Employee;
 import com.teamcool.touristum.data.model.LoggedInUser;
+import com.teamcool.touristum.data.model.Package;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +33,7 @@ public class LoginActivity extends AppCompatActivity  {
     private EditText et_username,et_password;
     private Button login,register;
     private static Employee emp;
+    private static Agency agency;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,11 @@ public class LoginActivity extends AppCompatActivity  {
                             startActivity(intent);
                             finish();
                         }
+                        else if(obj.getType().equals("agency")){
+                            Intent intent=new Intent(LoginActivity.this,AgencyActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
                     }
                 }
                 else {
@@ -105,6 +113,7 @@ public class LoginActivity extends AppCompatActivity  {
         return emp;
 
     }
+    public static Agency getLoggedInAgency(){ return agency;}
 
     private Employee getEmployee(SQLiteDatabase mDb, String username) {
 

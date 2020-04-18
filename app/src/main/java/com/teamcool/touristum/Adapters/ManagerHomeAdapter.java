@@ -139,7 +139,7 @@ public class ManagerHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             PackageViewHolder packageViewHolder = (PackageViewHolder) holder;
             packageViewHolder.tv_days.setText("Days : " + aPackage.getDays().toString());
             packageViewHolder.tv_city.setText("City : " + aPackage.getCity().toString() +"(Id : " + aPackage.getCityID() + ")");
-            packageViewHolder.tv_price.setText("Price : "  + aPackage.getPackagePrice().toString());
+            packageViewHolder.tv_price.setText("Price : "  + aPackage.getPrice().toString());
             packageViewHolder.tv_packege.setText("Package : " + aPackage.getPackageType().toString() +"(Id : " + aPackage.getPackageID() + ")");
             packageViewHolder.tv_nights.setText("Nights : " + aPackage.getNights().toString());
             packageViewHolder.tv_agency.setText("Agency : " + aPackage.getAgencyName().toString()+"(Id : " + aPackage.getAgencyID() + ")");
