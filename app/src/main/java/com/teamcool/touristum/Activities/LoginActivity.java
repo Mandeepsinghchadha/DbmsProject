@@ -169,6 +169,26 @@ public class LoginActivity extends AppCompatActivity  {
             edit.putString("client"+cur.getString(0), json);
             edit.apply();
         }
+
+        sql ="SELECT AgencyID,AgencyName from agencies";
+        cur = mDb.rawQuery(sql, null);
+        while (cur != null && cur.moveToNext()) {
+
+            LoggedInUser user = new LoggedInUser(cur.getString(0),"agency","agency");
+            json = gson.toJson(user);
+            edit.putString("agency"+cur.getString(0), json);
+            edit.apply();
+        }
+
+        sql ="SELECT HotelID,HotelName from hotelInformation";
+        cur = mDb.rawQuery(sql, null);
+        while (cur != null && cur.moveToNext()) {
+
+            LoggedInUser user = new LoggedInUser(cur.getString(0),"hotel","hotel");
+            json = gson.toJson(user);
+            edit.putString("hotel"+cur.getString(0), json);
+            edit.apply();
+        }
         cur.close();
 
     }
