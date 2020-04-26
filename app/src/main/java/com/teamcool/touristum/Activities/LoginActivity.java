@@ -15,8 +15,10 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.teamcool.touristum.DatabaseHelper;
 import com.teamcool.touristum.R;
+import com.teamcool.touristum.data.model.Agency;
 import com.teamcool.touristum.data.model.Employee;
 import com.teamcool.touristum.data.model.LoggedInUser;
+import com.teamcool.touristum.data.model.Package;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +33,7 @@ public class LoginActivity extends AppCompatActivity  {
     private EditText et_username,et_password;
     private Button login,register;
     private static Employee emp;
+    private static Agency agency;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,12 @@ public class LoginActivity extends AppCompatActivity  {
                             startActivity(intent);
                             finish();
                         }
+                        else if(obj.getType().equals("agency")){
+                            agency=getAgency(mDb,username);
+                            Intent intent=new Intent(LoginActivity.this,AgencyActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
                     }
                 }
                 else {
@@ -105,7 +114,23 @@ public class LoginActivity extends AppCompatActivity  {
         return emp;
 
     }
-
+    public static Agency getLoggedInAgency(){ return agency;}
+    private Agency getAgency(SQLiteDatabase mDb,String username){
+        String agencyID = username.substring(6,username.length());
+        String sql ="SELECT AgencyID, AgencyName, AgencyAddress, AgencyContact,NumberOfPackages \n" +
+                " FROM agencies  " +
+                "where AgencyID = '" +agencyID + "' ;";
+        Cursor cur = mDb.rawQuery(sql, null);
+        Agency ag=null;
+        while(cur != null && cur.moveToNext()) {
+            ag=new Agency(cur.getString(0),
+                    cur.getString(1),
+                    cur.getString(2),
+                    cur.getString(3),
+                    cur.getString(4));
+        }
+        return ag;
+    }
     private Employee getEmployee(SQLiteDatabase mDb, String username) {
 
         String empId = username.substring(8,username.length());
@@ -158,6 +183,26 @@ public class LoginActivity extends AppCompatActivity  {
             LoggedInUser user = new LoggedInUser(cur.getString(0),"client","client");
             json = gson.toJson(user);
             edit.putString("client"+cur.getString(0), json);
+            edit.apply();
+        }
+
+        sql ="SELECT AgencyID,AgencyName from agencies";
+        cur = mDb.rawQuery(sql, null);
+        while (cur != null && cur.moveToNext()) {
+
+            LoggedInUser user = new LoggedInUser(cur.getString(0),"agency","agency");
+            json = gson.toJson(user);
+            edit.putString("agency"+cur.getString(0), json);
+            edit.apply();
+        }
+
+        sql ="SELECT HotelID,HotelName from hotelInformation";
+        cur = mDb.rawQuery(sql, null);
+        while (cur != null && cur.moveToNext()) {
+
+            LoggedInUser user = new LoggedInUser(cur.getString(0),"hotel","hotel");
+            json = gson.toJson(user);
+            edit.putString("hotel"+cur.getString(0), json);
             edit.apply();
         }
         cur.close();

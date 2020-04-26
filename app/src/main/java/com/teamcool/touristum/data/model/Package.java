@@ -1,16 +1,16 @@
 package com.teamcool.touristum.data.model;
 
 public class Package {
-    private String PackageID,AgencyName,PackageType,Days,Nights,City,PackagePrice,AgencyID,cityID;
+    private String PackageID,AgencyName,PackageType,Days,Nights,City,Price,AgencyID,cityID;
 
-    public Package(String packageID, String agencyName, String packageType, String days, String nights, String city, String packagePrice,String agencyID,String cityID) {
+    public Package(String packageID, String agencyName, String packageType, String days, String nights, String city, String packagePrice, String agencyID, String cityID) {
         PackageID = packageID;
         AgencyName = agencyName;
         PackageType = packageType;
         Days = days;
         Nights = nights;
         City = city;
-        PackagePrice = packagePrice;
+        Price = packagePrice;
         this.cityID = cityID;
         AgencyID = agencyID;
     }
@@ -19,56 +19,56 @@ public class Package {
         return PackageID;
     }
 
-    public String getAgencyName() {
-        return AgencyName;
-    }
-
-    public String getPackageType() {
-        return PackageType;
-    }
-
-    public String getDays() {
-        return Days;
-    }
-
-    public String getNights() {
-        return Nights;
-    }
-
-    public String getCity() {
-        return City;
-    }
-
-    public String getPackagePrice() {
-        return PackagePrice;
-    }
-
     public void setPackageID(String packageID) {
         PackageID = packageID;
+    }
+
+    public String getAgencyName() {
+        return AgencyName;
     }
 
     public void setAgencyName(String agencyName) {
         AgencyName = agencyName;
     }
 
+    public String getPackageType() {
+        return PackageType;
+    }
+
     public void setPackageType(String packageType) {
         PackageType = packageType;
+    }
+
+    public String getDays() {
+        return Days;
     }
 
     public void setDays(String days) {
         Days = days;
     }
 
+    public String getNights() {
+        return Nights;
+    }
+
     public void setNights(String nights) {
         Nights = nights;
+    }
+
+    public String getCity() {
+        return City;
     }
 
     public void setCity(String city) {
         City = city;
     }
 
-    public void setPackagePrice(String packagePrice) {
-        PackagePrice = packagePrice;
+    public String getPrice() {
+        return Price;
+    }
+
+    public void setPrice(String price) {
+        Price = price;
     }
 
     public String getAgencyID() {

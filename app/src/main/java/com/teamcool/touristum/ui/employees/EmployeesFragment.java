@@ -44,6 +44,7 @@ import java.util.List;
 public class EmployeesFragment extends Fragment {
 
     private RecyclerView rv_data;
+    private ManagerEmployeeAdapter managerEmployeeAdapter;
     private EditText et_search, et_filter;
 
     private Employee currEmployee;
@@ -52,7 +53,6 @@ public class EmployeesFragment extends Fragment {
     private SQLiteDatabase mDb;
     private DatabaseHelper mDbHelper;
 
-    private ManagerEmployeeAdapter managerEmployeeAdapter;
 
     private String[] filter_options;
     private AlertDialog.Builder builder;
