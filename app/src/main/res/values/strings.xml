@@ -14,7 +14,8 @@
     <string name="title_employees">Employees</string>
     <string name="title_addBooking">Add Booking</string>
     <string name="title_profile">Profile</string>
-
+    <string name="title_upcomingtrips">Upcoming Trips</string>
+    <string name="title_pasttrips">Past Trips</string>
     <string-array name="manager_options">
         <item>Packages</item>
         <item>Bookings</item>
