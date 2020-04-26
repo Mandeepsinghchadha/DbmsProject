@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pID"
+        android:text="PackageID"
+        android:layout_marginTop="30sp"
+        android:textSize="20sp"
+        android:layout_marginLeft="120sp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Type"
+            android:textSize="15sp"
+            android:layout_marginLeft="20sp"
+            android:text="PackageType  :  " />
+        <EditText
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:id="@+id/type"
+            android:hint="Enter Type"
+            android:layout_marginLeft="20sp"
+            android:textSize="15sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Days"
+            android:textSize="15sp"
+            android:layout_marginLeft="20sp"
+            android:text="Days  :  " />
+        <EditText
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:id="@+id/days"
+            android:hint="Enter days"
+            android:layout_marginLeft="20sp"
+            android:textSize="15sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_3"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Nights"
+            android:textSize="15sp"
+            android:layout_marginLeft="20sp"
+            android:text="Nights  :  " />
+        <EditText
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:id="@+id/nights"
+            android:hint="Enter Nights"
+            android:layout_marginLeft="20sp"
+            android:textSize="15sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_4"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Price"
+            android:textSize="15sp"
+            android:layout_marginLeft="20sp"
+            android:text="Price  :  " />
+        <EditText
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:id="@+id/pprice"
+            android:hint="Enter Price"
+            android:layout_marginLeft="20sp"
+            android:textSize="15sp"/>
+    </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/but_add"
+        android:text="ADD"
+        android:layout_marginTop="30sp"
+        android:layout_marginLeft="150sp"/>
+
+</LinearLayout>

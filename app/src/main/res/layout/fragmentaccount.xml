@@ -2,11 +2,141 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="@android:color/white">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Account info Fragment"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:src="@drawable/ic_people_black_24dp"
+            android:layout_marginLeft="150sp"
+            android:id="@+id/Account_image">
+        </ImageView>
+
+        <TextView
+            android:layout_width="150sp"
+            android:layout_height="100sp"
+            android:id="@+id/TextID"
+            android:textSize="20sp"
+            android:layout_marginLeft="150sp"
+            android:text="AccountID" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/AhencyName"
+                android:textSize="20sp"
+                android:layout_marginLeft="20sp"
+                android:text="AgencyName  :  " />
+            <EditText
+                android:layout_width="150sp"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_name"
+                android:layout_marginLeft="20sp"
+                android:textSize="20sp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_name"
+                android:src="@drawable/edit"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/AhencyAddress"
+                android:textSize="20sp"
+                android:layout_marginLeft="20sp"
+                android:text="AgencyAddress  :  " />
+            <EditText
+                android:layout_width="150sp"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_address"
+                android:layout_marginLeft="20sp"
+                android:textSize="20sp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_address"
+                android:src="@drawable/edit"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout3"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/AhencyContact"
+                android:textSize="20sp"
+                android:layout_marginLeft="20sp"
+                android:text="AgencyContact  :  " />
+            <EditText
+                android:layout_width="150sp"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_contact"
+                android:layout_marginLeft="20sp"
+                android:textSize="20sp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_contact"
+                android:src="@drawable/edit"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout4"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/NoOfPackages"
+                android:textSize="20sp"
+                android:layout_marginLeft="20sp"
+                android:text="No. of Packages  :  " />
+            <EditText
+                android:layout_width="150sp"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_number"
+                android:layout_marginLeft="20sp"
+                android:textSize="20sp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_number"
+                android:src="@drawable/edit"/>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:layout_marginLeft="150sp"
+            android:layout_marginTop="100sp"
+            android:id="@+id/logout"
+            />
+    </LinearLayout>
+
 
 </RelativeLayout>
