@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.teamcool.touristum.R;
 import com.teamcool.touristum.data.model.Agency;
@@ -64,7 +65,6 @@ public class ManagerHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.d(TAG, "onCreateViewHolder: " + VIEW_MODE);
-
         if(VIEW_MODE == VIEW_MODE_BOOKING){
             View itemView = LayoutInflater.from(context).inflate(R.layout.list_item_booking,parent,false);
             return new BookingsViewHolder(itemView);

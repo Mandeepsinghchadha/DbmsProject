@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_upcomingTrips">
+
+    <fragment
+        android:id="@+id/navigation_upcomingTrips"
+        android:name="com.teamcool.touristum.ui.Drivertrips.UpcomingTripsFragment"
+        android:label="@string/title_upcomingtrips"
+        tools:layout="@layout/fragment_upcoming_trips" />
+
+    <fragment
+        android:id="@+id/navigation_pastTrips"
+        android:name="com.teamcool.touristum.ui.Drivertrips.PastTripsFragment"
+        android:label="@string/title_pasttrips"
+        tools:layout="@layout/fragment_past_trips" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.teamcool.touristum.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>
